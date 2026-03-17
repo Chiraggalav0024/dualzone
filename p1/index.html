@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DUAL — 2 Player Games</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- LANDING PAGE -->
+  <div id="landing" class="screen active">
+    <div class="noise"></div>
+    <div class="landing-grid">
+      <div class="landing-left">
+        <div class="tag">TWO PLAYERS. ONE SCREEN.</div>
+        <h1 class="big-title">DU<span class="accent">AL</span></h1>
+        <p class="sub">No internet needed. Just you, a friend, and the same keyboard.</p>
+        <div class="game-cards">
+          <div class="game-card" onclick="launchGame('ttt')">
+            <div class="card-icon">✕ ○</div>
+            <div class="card-info">
+              <h3>Tic-Tac-Toe</h3>
+              <p>Classic 3×3 grid showdown</p>
+            </div>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="game-card" onclick="launchGame('connect4')">
+            <div class="card-icon">⬤ ⬤</div>
+            <div class="card-info">
+              <h3>Connect Four</h3>
+              <p>Drop discs, make 4 in a row</p>
+            </div>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="game-card" onclick="launchGame('snake')">
+            <div class="card-icon">◈ ◈</div>
+            <div class="card-info">
+              <h3>Dual Snake</h3>
+              <p>Two snakes, one arena</p>
+            </div>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="game-card" onclick="launchGame('pong')">
+            <div class="card-icon">| · |</div>
+            <div class="card-info">
+              <h3>Pong</h3>
+              <p>The original 2-player classic</p>
+            </div>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="game-card" onclick="launchGame('rps')">
+            <div class="card-icon">✊ ✋</div>
+            <div class="card-info">
+              <h3>Rock Paper Scissors</h3>
+              <p>Best of 5 rounds</p>
+            </div>
+            <div class="card-arrow">→</div>
+          </div>
+        </div>
+      </div>
+      <div class="landing-right">
+        <div class="deco-block">
+          <div class="deco-circle c1"></div>
+          <div class="deco-circle c2"></div>
+          <div class="deco-text">PLAYER<br/>VS<br/>PLAYER</div>
+        </div>
+        <div class="score-display" id="globalScore">
+          <div class="score-label">SESSION WINS</div>
+          <div class="scores">
+            <div><span class="p1c">P1</span> <span id="p1wins">0</span></div>
+            <div class="vs-divider">VS</div>
+            <div><span id="p2wins">0</span> <span class="p2c">P2</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIC TAC TOE -->
+  <div id="ttt" class="screen game-screen">
+    <div class="noise"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()">← BACK</button>
+      <h2>TIC-TAC-TOE</h2>
+      <div class="turn-display" id="tttTurn">Player 1's Turn (✕)</div>
+    </div>
+    <div class="ttt-wrap">
+      <div class="ttt-board" id="tttBoard"></div>
+      <div class="game-status" id="tttStatus"></div>
+      <button class="reset-btn" onclick="resetTTT()">PLAY AGAIN</button>
+    </div>
+  </div>
+
+  <!-- CONNECT FOUR -->
+  <div id="connect4" class="screen game-screen">
+    <div class="noise"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()">← BACK</button>
+      <h2>CONNECT FOUR</h2>
+      <div class="turn-display" id="c4Turn">Player 1's Turn</div>
+    </div>
+    <div class="c4-wrap">
+      <div class="c4-cols" id="c4Cols"></div>
+      <div class="c4-board-wrap">
+        <canvas id="c4Canvas" width="490" height="420"></canvas>
+      </div>
+      <div class="game-status" id="c4Status"></div>
+      <button class="reset-btn" onclick="resetC4()">PLAY AGAIN</button>
+    </div>
+  </div>
+
+  <!-- DUAL SNAKE -->
+  <div id="snake" class="screen game-screen">
+    <div class="noise"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()">← BACK</button>
+      <h2>DUAL SNAKE</h2>
+      <div class="turn-display">P1: WASD &nbsp;|&nbsp; P2: Arrow Keys</div>
+    </div>
+    <div class="snake-wrap">
+      <div class="snake-scores">
+        <div class="s-score p1c">P1: <span id="s1score">0</span></div>
+        <div class="s-score p2c">P2: <span id="s2score">0</span></div>
+      </div>
+      <canvas id="snakeCanvas" width="600" height="400"></canvas>
+      <div class="game-status" id="snakeStatus"></div>
+      <button class="reset-btn" onclick="resetSnake()">START / RESTART</button>
+    </div>
+  </div>
+
+  <!-- PONG -->
+  <div id="pong" class="screen game-screen">
+    <div class="noise"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()">← BACK</button>
+      <h2>PONG</h2>
+      <div class="turn-display">P1: W/S &nbsp;|&nbsp; P2: ↑/↓</div>
+    </div>
+    <div class="pong-wrap">
+      <canvas id="pongCanvas" width="700" height="400"></canvas>
+      <div class="game-status" id="pongStatus"></div>
+      <button class="reset-btn" onclick="resetPong()">START / RESTART</button>
+    </div>
+  </div>
+
+  <!-- ROCK PAPER SCISSORS -->
+  <div id="rps" class="screen game-screen">
+    <div class="noise"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()">← BACK</button>
+      <h2>ROCK PAPER SCISSORS</h2>
+      <div class="turn-display">Best of 5</div>
+    </div>
+    <div class="rps-wrap">
+      <div class="rps-scores">
+        <div class="rps-score-box p1c">
+          <div>PLAYER 1</div>
+          <div class="rps-pts" id="rps1pts">0</div>
+        </div>
+        <div class="rps-score-box p2c">
+          <div>PLAYER 2</div>
+          <div class="rps-pts" id="rps2pts">0</div>
+        </div>
+      </div>
+      <div class="rps-phase" id="rpsPhase">
+        <div class="rps-player-section" id="rpsP1Section">
+          <h3 class="p1c">PLAYER 1 — Choose secretly</h3>
+          <div class="rps-choices">
+            <button class="rps-btn" onclick="rpsChoose(1,'rock')">✊<br/>Rock</button>
+            <button class="rps-btn" onclick="rpsChoose(1,'paper')">✋<br/>Paper</button>
+            <button class="rps-btn" onclick="rpsChoose(1,'scissors')">✌️<br/>Scissors</button>
+          </div>
+        </div>
+        <div class="rps-divider">→</div>
+        <div class="rps-player-section" id="rpsP2Section">
+          <h3 class="p2c">PLAYER 2 — Choose secretly</h3>
+          <div class="rps-choices">
+            <button class="rps-btn" onclick="rpsChoose(2,'rock')">✊<br/>Rock</button>
+            <button class="rps-btn" onclick="rpsChoose(2,'paper')">✋<br/>Paper</button>
+            <button class="rps-btn" onclick="rpsChoose(2,'scissors')">✌️<br/>Scissors</button>
+          </div>
+        </div>
+      </div>
+      <div class="rps-result" id="rpsResult"></div>
+      <button class="reset-btn" onclick="resetRPS()">RESET GAME</button>
+    </div>
+  </div>
+
+  <script src="games.js"></script>
+</body>
+</html>
